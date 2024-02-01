@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import LoginForm from "./LoginFrom";
+import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
+import { activeTab, inactiveTab } from "../utils/Utils";
 
-const activeTab = "p-2 bg-black text-white rounded-t-xl border-black";
-const inactiveTab = "p-2 rounded-t-xl bg-gray-300  border-b-0 text-gray-600";
 function Login() {
 
     const [isLogin, setIsLogin] = useState(true);

@@ -8,20 +8,19 @@ function SignUpForm({showLogin} : {showLogin:any}) {
     const [errMsg, setErrMsg] = useState<string>("")
 
     function signup(data: FieldValues) {
-        console.log(data)
         var newUser : User = {ID:null, username: data.username, password: data.password}
         UserServices.register(newUser)
-            .then((res) => { 
-                console.log(JSON.stringify(res.data));
+            .then((res) => {
                 if(res.status === 200) {
                     alert("sign up success, please login with your account");
                     showLogin();
                 }
             })
             .catch((err) => {
-                console.error(err);
                 if(err.response.status === 409) {
                     setErrMsg(err.response.data.message)
+                } else {
+                    setErrMsg("Bad Request")
                 }
             })
         

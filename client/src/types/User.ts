@@ -3,3 +3,10 @@ export default interface User {
     username: string,
     password: string
 }
+
+export interface LoginSucess {
+    message: string
+    token: string
+    ID: number
+    username: string
+}

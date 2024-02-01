@@ -1,12 +1,12 @@
 import http from "../http-common";
-import User from "../types/User";
+import User, { LoginSucess } from "../types/User";
 
 const register = (data: User) => {
     return http.post<User>("/user/register", data);
 }
 
 const login = (data: User) => {
-    return http.post<User>("/user/login", data);
+    return http.post<LoginSucess>("/user/login", data);
 }
 
 const UserServices = {

@@ -11,7 +11,7 @@ import (
 )
 
 func GetUsers(c *gin.Context) {
-	users := []models.User{}
+	users := []User{}
 	err := config.DB.Table("users").Find(&users).Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -22,6 +22,7 @@ func GetUsers(c *gin.Context) {
 		c.IndentedJSON(200, gin.H{"message": "empty"})
 		return
 	}
+
 	c.IndentedJSON(200, &users)
 }
 
@@ -39,15 +40,6 @@ func getAndHandleUserExists(user *models.User, username string) (exists bool, er
 	}
 
 	return false, nil
-}
-
-func hashAndSaltPassword(password string) (hashedPassword string, err error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
-		return "", err
-	}
-
-	return string(bytes), nil
 }
 
 func Register(c *gin.Context) {
@@ -113,5 +105,13 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMsg})
 		return
 	}
+
+	token, tokenErr := createToken(existingUser.Username)
+	if tokenErr != nil {
+		c.JSON(http.StatusInternalServerError, tokenErr.Error())
+		return
+	}
+
+	c.IndentedJSON(200, gin.H{"message": "Login sucessful", "token": token, "ID": existingUser.ID, "username": existingUser.Username})
 
 }

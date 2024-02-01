@@ -2,26 +2,28 @@ import React, { useState } from "react";
 import User from "../types/User";
 import UserServices from "../services/UserService";
 import { FieldValues, useForm } from "react-hook-form";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 function LoginForm() {
     const {register, handleSubmit, formState: {errors}} = useForm()
     const [errMsg, setErrMsg] = useState<string>("")
 
     function login(data: FieldValues) {
-        console.log(data)
         var user : User = {ID:null, username: data.username, password: data.password}
         UserServices.login(user)
-            .then((res) => { 
-                console.log(res.data);
+            .then((res) => {
                 if(res.status === 200) {
-                    alert("login success");
-                    // todo
+                    // save token
+                    cookies.set("token", res.data.token, {path: "/"})
+                    window.location.href = "/"
                 }
             })
             .catch((err) => {
-                console.error(err.response);
                 if(err.response.status === 401) {
                     setErrMsg(err.response.data.message)
+                } else {
+                    setErrMsg("Bad Request")
                 }
             })
         
