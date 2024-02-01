@@ -14,6 +14,6 @@ func Connect() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.Chat{}, &models.Chatroom{}, &models.ChatroomMember{})
 	DB = db
 }
