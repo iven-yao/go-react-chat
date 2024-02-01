@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
 import User from './types/User';
 import UserServices from './services/UserService';
 
@@ -10,8 +9,7 @@ import UserServices from './services/UserService';
 function App() {
   const [users, setUsers] = useState<User[]>([]);
   useEffect(() => {
-    // UserServices.getAll().then(res => setUsers(res.data)).catch(err => console.error(err))
-    UserServices.get(6).then(res => setUsers([res.data])).catch(err => console.error(err))
+    UserServices.getAll().then(res => setUsers(res.data)).catch(err => console.error(err))
   },[])
 
   return (
