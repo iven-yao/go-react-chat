@@ -3,6 +3,7 @@ package controller
 import (
 	"chat-server/config"
 	"chat-server/models"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -26,6 +27,18 @@ func GetUsers(c *gin.Context) {
 	c.IndentedJSON(200, &users)
 }
 
+func TestUser(c *gin.Context) {
+	token := c.Request.Header.Get("Authorization")[len("Bearer "):]
+	id, err := verifyToken(token)
+	if err != nil {
+		fmt.Print("Invalid token")
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"id": id})
+}
+
 func getAndHandleUserExists(user *models.User, username string) (exists bool, err error) {
 	userExistsQuery := config.DB.Table("users").Where("username = ?", strings.ToLower(username)).Limit(1).Find(&user)
 
@@ -46,6 +59,12 @@ func Register(c *gin.Context) {
 	var userInput models.User
 	if err := c.BindJSON(&userInput); err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	// check input
+	if userInput.Password == "" || userInput.Username == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "empty input"})
 		return
 	}
 
@@ -73,6 +92,15 @@ func Register(c *gin.Context) {
 	}
 
 	config.DB.Table("users").Create(&newUser)
+
+	// add to chatroom_members
+	var defaultChatroomMember models.ChatroomMember
+	defaultChatroomMember = models.ChatroomMember{
+		Chatroom_id: config.PublicChatRoomID,
+		User_id:     newUser.ID,
+	}
+	config.DB.Table("chatroom_members").Create(&defaultChatroomMember)
+
 	c.IndentedJSON(200, gin.H{
 		"ID":       newUser.ID,
 		"Username": newUser.Username,
@@ -106,7 +134,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	token, tokenErr := createToken(existingUser.Username)
+	token, tokenErr := createToken(existingUser.Username, existingUser.ID)
 	if tokenErr != nil {
 		c.JSON(http.StatusInternalServerError, tokenErr.Error())
 		return

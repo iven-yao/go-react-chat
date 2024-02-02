@@ -9,9 +9,14 @@ const login = (data: User) => {
     return http.post<LoginSucess>("/user/login", data);
 }
 
+const test = () => {
+    return http.get("/user/test");
+}
+
 const UserServices = {
     register,
-    login
+    login,
+    test
 }
 
 export default UserServices;
