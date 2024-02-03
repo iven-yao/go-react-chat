@@ -19,7 +19,7 @@ function Main() {
         }
     }
 
-    const {sendMessage: sendWsMessage, lastMessage} = useWebSocket('ws://localhost:9090/api/ws',{},true);
+    const {sendMessage: sendWsMessage, lastMessage} = useWebSocket('ws://localhost:8080/api/ws',{},true);
     const sendMessage = (type: string, text: string, vote: number, chatid: number): void => {
         const msg: WebSocketMessage = {
             type: type,

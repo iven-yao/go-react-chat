@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: go-react-chat-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: go-react-chat-frontend
+  template:
+    metadata:
+      labels:
+        app: go-react-chat-frontend
+    spec:
+      containers:
+      - name: go-react-chat-frontend
+        image: ivenyao/go-react-chat-frontend:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "300m"
+          limits:
+            memory: "200Mi"
+            cpu: "600m"
+      restartPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: go-react-chat-frontend
+spec:
+  type: NodePort
+  ports:
+    - port: 9000
+      targetPort: 9000
+      protocol: TCP
+      nodePort: 31000
+  selector:
+    app: go-react-chat-frontend

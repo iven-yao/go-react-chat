@@ -18,7 +18,7 @@ func main() {
 
 	// middlewares, cors
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:9000"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -29,5 +29,5 @@ func main() {
 	// routes
 	routes.Routes(router)
 
-	router.Run("localhost:9090") // path, port
+	router.Run() // path, port default 8080
 }

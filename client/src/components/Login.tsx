@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 
-export const activeTab = "p-2 rounded-t-xl border-stone-600 bg-white z-10 bg-stone-400";
+export const activeTab = "p-2 rounded-t-xl border-stone-600 z-10 bg-stone-400";
 export const inactiveTab = "p-2 rounded-t-xl bg-stone-300  border-b-0 text-stone-100 border-stone-600 hover:text-black";
 
 function Login() {

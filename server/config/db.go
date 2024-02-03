@@ -11,7 +11,7 @@ var DB *gorm.DB
 var PublicChatRoomID uint
 
 func Connect() {
-	db, err := gorm.Open(postgres.Open("postgres://postgres:postgres@localhost:5432/postgres"), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open("postgres://postgres:postgres@db:5432/postgres"), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
