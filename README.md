@@ -25,3 +25,8 @@ create new record/ update exist record in database and broadcast to every connec
 - switch to frontend directory, install dependencies with `npm i`, then run `npm start`
 - backend will be listening on port 8080, and react could be access on `http://localhost:3000/`
 
+## Ref
+- https://medium.com/@cheickzida/golang-implementing-jwt-token-authentication-bba9bfd84d60
+- https://betterprogramming.pub/building-web-chat-with-go-and-websockets-312f459c001a
+- https://dev.to/shaggyrec/run-a-golang-nginx-and-react-app-in-docker-59kn
+- https://www.bogotobogo.com/DevOps/Docker/Docker-Kubernetes-React-App.php
