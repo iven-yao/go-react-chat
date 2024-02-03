@@ -6,9 +6,12 @@ const cookie  = new Cookies()
 function ChatBubble({chat, upvote, downvote} : {chat: ChatsRecv, upvote:(id:number) => void, downvote:(id: number) => void}) {
 
     return cookie.get("username") === chat.username ?
-            <div className="p-1 m-1 flex text-xl justify-end">
+            <div className="p-1 m-1 flex flex-col text-xl items-end">
                 <div>
                     <p className="bg-blue-400 rounded-t-xl rounded-l-xl px-2 py-1 break-words max-w-lg">{chat.message}</p>
+                    
+                </div>
+                <div className="flex">
                     <div className="flex justify-end text-xs mt-1 text-gray-700">
                         <button disabled>
                             <HandThumbUpIcon className="h-4 w-4 mr-2"/>
@@ -18,8 +21,10 @@ function ChatBubble({chat, upvote, downvote} : {chat: ChatsRecv, upvote:(id:numb
                             <HandThumbDownIcon className="h-4 w-4 ml-2"/>
                         </button>
                     </div>
+                    <div className=" flex flex-col justify-end text-xs text-gray-500">
+                        {new Date(chat.CreatedAt).toLocaleTimeString([],{hour:'2-digit', minute:'2-digit'})}
+                    </div>
                 </div>
-                <div className=" flex flex-col justify-end text-xs text-gray-500">{new Date(chat.CreatedAt).toLocaleTimeString([],{hour:'2-digit', minute:'2-digit'})}</div>
             </div>
             :
             <div className="p-1 m-1 flex text-xl flex-col">

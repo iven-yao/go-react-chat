@@ -118,13 +118,13 @@ function Main() {
                     <div className="bg-gray-200 border h-0.5 w-1 skew-y-[45deg] translate-y-0.5 "></div>
                 </div>
             </div>
-            <div className="flex-2 bg-black text-white p-2 overflow-y-scroll z-50">
+            <div className="flex-grow bg-black text-white p-2 overflow-y-scroll z-50">
                 
                 {Array.from(chatMap).map((chat) => <ChatBubble key={chat[0]} chat={chat[1]} upvote={upvote} downvote={downvote}/>)}
                 <div className="h-20" />
                 <div ref={messageEndRef} />
             </div>
-            <div className="p-2 flex-1">
+            <div className="p-2">
                 <textarea placeholder="Enter Messages..." name="message" className="h-full w-full bg-white text p-1" value={message} onChange={(e) => setMessage(e.target.value)} onKeyDown={onEnterPress}/>
                 <button className="absolute bottom-5 right-5 border rounded-lg p-2 bg-gray-200 shadow-md shadow-gray-500" onClick={() => send()}>
                     <ArrowUturnLeftIcon className="w-5" />
