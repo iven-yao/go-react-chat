@@ -1,42 +1,36 @@
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: go-react-chat-frontend
+  name: go-react-chat
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: go-react-chat-frontend
+      app: go-react-chat
   template:
     metadata:
       labels:
-        app: go-react-chat-frontend
+        app: go-react-chat
     spec:
       containers:
-      - name: go-react-chat-frontend
-        image: ivenyao/go-react-chat-frontend:v1
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 9000
-        resources:
-          requests:
-            memory: "100Mi"
-            cpu: "300m"
-          limits:
-            memory: "200Mi"
-            cpu: "600m"
-      restartPolicy: Always
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: go-react-chat-frontend
-spec:
-  type: NodePort
-  ports:
-    - port: 9000
-      targetPort: 9000
-      protocol: TCP
-      nodePort: 31000
-  selector:
-    app: go-react-chat-frontend
+        - name: api
+          image: ivenyao/go-react-chat-api:v1
+          ports:
+            - containerPort: 8080
+
+        - name: frontend
+          image: ivenyao/go-react-chat-frontend:v1
+          ports:
+            - containerPort: 9000
+
+        - name: db
+          image: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
