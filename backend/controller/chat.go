@@ -88,14 +88,12 @@ func handleNewVote(wsMsg wsMessage, msgType int) {
 	if wsMsg.Vote > 0 {
 		// upvote
 		existChat.Upvotes = existChat.Upvotes + 1
-		fmt.Println("upvote:", existChat.Upvotes)
 		if err := config.DB.Table("chats").Where("id = ?", wsMsg.Chatid).Update("upvotes", existChat.Upvotes).Error; err != nil {
 			fmt.Println(err.Error())
 		}
 	} else if wsMsg.Vote < 0 {
 		// downvote
 		existChat.Downvotes = existChat.Downvotes + 1
-		fmt.Println("downvote:", existChat.Downvotes)
 		if err := config.DB.Table("chats").Where("id = ?", wsMsg.Chatid).Update("downvotes", existChat.Downvotes).Error; err != nil {
 			fmt.Println(err.Error())
 		}
@@ -129,8 +127,6 @@ func WebSocketConnect(c *gin.Context) {
 		if err != nil {
 			return
 		}
-
-		fmt.Printf("%s sent: %s\n", ws.RemoteAddr(), string(msg))
 
 		// decode the message
 		var wsMsg wsMessage
