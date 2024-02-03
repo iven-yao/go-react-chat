@@ -8,6 +8,6 @@ import (
 
 func ChatRouter(router *gin.Engine) {
 	g := router.Group("/api")
-	g.GET("/chat/:chatroomId", controller.GetChats)
-	g.POST("/chat", controller.SendChat)
+	g.GET("/chat", controller.GetChats)
+	g.GET("/ws", controller.WebSocketConnect)
 }

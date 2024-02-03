@@ -93,14 +93,6 @@ func Register(c *gin.Context) {
 
 	config.DB.Table("users").Create(&newUser)
 
-	// add to chatroom_members
-	var defaultChatroomMember models.ChatroomMember
-	defaultChatroomMember = models.ChatroomMember{
-		Chatroom_id: config.PublicChatRoomID,
-		User_id:     newUser.ID,
-	}
-	config.DB.Table("chatroom_members").Create(&defaultChatroomMember)
-
 	c.IndentedJSON(200, gin.H{
 		"ID":       newUser.ID,
 		"Username": newUser.Username,

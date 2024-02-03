@@ -16,6 +16,7 @@ function LoginForm() {
                 if(res.status === 200) {
                     // save token
                     cookies.set("token", res.data.token, {path: "/"})
+                    cookies.set("username", res.data.username, {path: "/"})
                     window.location.href = "/"
                 }
             })
@@ -30,14 +31,14 @@ function LoginForm() {
     }
 
     return (
-        <div className="bg-black text-white p-5 rounded-b-md">
+        <div className="shadow-lg shadow-stone-600 p-5 rounded-b-md bg-stone-400">
             <form onSubmit={handleSubmit((data) => login(data))}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
                     <label className="flex justify-start md:py-2">Username</label>
-                    <input type="text" className=" rounded-md p-2 md:col-span-2 text-black" {...register('username', {required: true})}>
+                    <input type="text" placeholder="Enter Username" className="border-b border-stone-600 rounded-md p-2 md:col-span-2 text-black" {...register('username', {required: true})}>
                     </input>
                     <label className="flex justify-start md:py-2">Password</label>
-                    <input type="password" className="rounded-md p-2 md:col-span-2 text-black" {...register('password', {required: true})}>
+                    <input type="password" placeholder="Enter Password" className="border-b border-stone-600 rounded-md p-2 md:col-span-2 text-black" {...register('password', {required: true})}>
                     </input>
                 </div>
                 <div className="text-red-600">
@@ -47,7 +48,7 @@ function LoginForm() {
                     {errMsg.length > 0 && <div>Error: {errMsg}</div>}
                 </div>
                 <div className="flex justify-end">
-                    <button className="bg-white rounded-md px-2 py-1 text-black hover:bg-blue-400" type="submit">Login</button>
+                    <button className="rounded-md px-2 py-1 text-black hover:bg-stone-200  bg-stone-500 shadow-md" type="submit">Login</button>
                 </div>
             </form>
         </div>

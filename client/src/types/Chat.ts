@@ -1,11 +1,17 @@
-export interface ChatSendOut {
-    message: string
-}
-
 export interface ChatsRecv {
-    id: number,
+    type: string,
+    ID: number,
     message: string,
     username: string,
-    created_at: EpochTimeStamp,
-    votes: number
+    CreatedAt: string,
+    upvotes: number,
+    downvotes: number
+}
+
+export interface WebSocketMessage {
+    type: string,
+    message: string, 
+    token: string,
+    vote: number,
+    chatid: number
 }
