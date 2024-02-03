@@ -12,7 +12,7 @@ services:
       - POSTGRES_DB=postgres
   api:
     build:
-      context: ./server
+      context: ./backend
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
@@ -20,7 +20,7 @@ services:
       - db
   frontend:
     build:
-      context: ./client
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "9000:9000"
